@@ -1,0 +1,149 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: 'Documentação Hoola'
+tags:
+- name: 'user'
+  description: 'Operações referente aos usuários)'
+- name: 'spot'
+  description: 'Operações referente aos espaços para locações'
+schemes:
+- 'https'
+- 'http'
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /users:
+    post:
+      tags:
+      - 'user'
+      summary: 'Cadastrar um usuário'
+      operationId: 'addUser'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        200:
+          description: 'Success'
+          schema:
+            $ref: '#/definitions/UserResponse'
+        400:
+          $ref: '#/responses/BadRequest'
+        500:
+          $ref: '#/responses/ServerError'
+  /spots:
+    post:
+      tags:
+      - 'spot'
+      summary: 'Cadastrar um espaço(spot)'
+      operationId: 'updateReq'
+      consumes:
+      - 'application/json'
+      produces:
+      - 'application/json'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        required: true
+        schema:
+          properties:
+            name:
+              type: 'string'
+            password:
+              type: 'string'
+            address:
+              $ref: '#/definitions/Address'
+      responses:
+        200:
+          description: 'Objeto com dados do requerente.'
+        400:
+          $ref: '#/responses/BadRequest'
+        401:
+          $ref: '#/responses/Unauthorized'
+        500:
+          $ref: '#/responses/ServerError'
+      security:
+        - Bearer: []
+
+responses:
+  ServerError:
+    description: 'Internal Server Error'
+    schema:
+      $ref: '#/definitions/ErrorSchemaOne'
+  BadRequest:
+    description: 'Bad Request'
+    schema:
+      $ref: '#/definitions/ErrorSchemaTwo'
+  Unauthorized:
+    description: 'Unauthorized'
+    schema:
+      $ref: '#/definitions/ErrorSchemaOne'
+
+definitions:
+  Spot:
+    type: 'object'
+    properties:
+      price:
+        type: 'number'
+      localization:
+        type: 'string'
+      description:
+        type: 'string'
+  User:
+    type: 'object'
+    required:
+    - 'email'
+    - 'password'
+    - 'name'
+    properties:
+      email:
+        type: 'string'
+      password:
+        type: 'string'
+      name:
+        type: 'string'
+  UserResponse:
+    type: 'object'
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'
+      email:
+        type: 'string'
+
+  ErrorSchemaOne:
+    type: 'object'
+    properties:
+      statusCode:
+        type: 'integer'
+      name:
+        type: 'string'
+      message:
+        type: 'string'
+  ErrorSchemaTwo:
+    type: 'object'
+    properties:
+      statusCode:
+        type: 'integer'
+      name:
+        type: 'string'
+      message:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            field:
+              type: 'string'
+            error:
+              type: 'string'
