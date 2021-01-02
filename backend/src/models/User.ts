@@ -25,6 +25,12 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column()
+  photo: string;
+
+  @Column()
+  cpf: string;
 }
 
 export default User;
