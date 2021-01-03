@@ -4,6 +4,8 @@ import { hash } from 'bcryptjs';
 import AppError from '../errors/AppError';
 import User from '../models/User';
 
+import { CPFValidate } from '../utils/CPFValidate';
+
 interface Request {
   name: string;
   email: string;
@@ -19,9 +21,18 @@ class CreateUserService {
       throw new AppError('Name, email or password or cpf is missing');
     }
 
-    if (!Number.isInteger(cpf)) {
-      throw new AppError('Cpf must be a number');
+    const regexOnlyLetters = RegExp('^[a-zA-Z]*$');
+    if (!regexOnlyLetters.test(name)) {
+      throw new AppError('Name must have only letters a-z')
     }
+
+
+    const regexOnlyNumbers = RegExp('^[0-9]*$');
+    if (!regexOnlyNumbers.test(cpf)) {
+      throw new AppError('Cpf must be a number')
+    }
+    if (!CPFValidate(cpf))
+      throw new AppError('CPF not valid');
 
     const checkExistentEmail = await userRepository.findOne({
       where: { email },
