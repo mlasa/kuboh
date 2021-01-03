@@ -17,9 +17,12 @@ class Spot {
   @Column()
   owner_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, user => user, { eager: true })
   @JoinColumn({ name: 'owner_id' })
   owner: User;
+
+  @Column()
+  status: string;
 
   @Column()
   price: number;

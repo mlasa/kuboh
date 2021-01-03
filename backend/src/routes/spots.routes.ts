@@ -1,6 +1,11 @@
 import { Router } from 'express';
+import { getRepository } from 'typeorm';
+
+import Spot from '../models/Spot';
 
 import CreateSpotService from '../services/CreateSpotService';
+import { PlainObjectToNewEntityTransformer } from 'typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer';
+
 
 const spotRouter = Router();
 
@@ -33,6 +38,17 @@ spotRouter.post('/', async (request, response) => {
   });
 
   return response.status(200).json(spot);
+});
+
+spotRouter.get('/', async (request, response) => {
+  const spotRepository = getRepository(Spot);
+  const allSpots = await spotRepository.find();
+  if (allSpots) {
+    allSpots.map(spot => delete spot.owner.password);
+    return response.status(200).json(allSpots);
+  }
+
+
 });
 
 export default spotRouter;

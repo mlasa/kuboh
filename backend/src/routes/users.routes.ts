@@ -13,17 +13,20 @@ interface Request {
 
 usersRoutes.post('/', async (request, response) => {
   const createUserService = new CreateUserService();
-  const { name, email, password } = request.body;
-  const user = { name, email, password };
+  const { name, email, password, cpf } = request.body;
+  const user = { name, email, password, cpf };
   const createdUser = await createUserService.execute(user);
 
   return response.status(200).json(createdUser);
 });
 
-usersRoutes.get('/', (request, response) => {
+usersRoutes.get('/', async (request, response) => {
   const userRepository = getRepository(User);
-  const users = userRepository.find();
-  if (users) return response.status(200).json(users);
+  const users = await userRepository.find();
+  if (users) {
+    users.map(user => delete user.password)
+    return response.status(200).json(users);
+  }
   return response.status(200).send('Sem resultados para essa busca');
 });
 

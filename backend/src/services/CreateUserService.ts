@@ -8,14 +8,19 @@ interface Request {
   name: string;
   email: string;
   password: string;
+  cpf: string;
 }
 
 class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
+  public async execute({ name, email, password, cpf }: Request): Promise<User> {
     const userRepository = getRepository(User);
 
-    if (!email || !name || !password) {
-      throw new AppError('Name, email or password is missing');
+    if (!email || !name || !password || !cpf) {
+      throw new AppError('Name, email or password or cpf is missing');
+    }
+
+    if (!Number.isInteger(cpf)) {
+      throw new AppError('Cpf must be a number');
     }
 
     const checkExistentEmail = await userRepository.findOne({
@@ -29,6 +34,7 @@ class CreateUserService {
       name,
       email,
       password: hashedPassword,
+      cpf,
     });
 
     await userRepository.save(user);
