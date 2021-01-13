@@ -13,6 +13,8 @@ export const Container = styled.div`
   max-width: 700px;
   min-width: 700px;
   padding: 20px;
+  justify-content: center;
+  align-items: center;
 
   button {
     background: #4abdac;
@@ -27,9 +29,6 @@ export const Container = styled.div`
       background: ${shade(0.2, '#dfdce3')};
     }
   }
-
-  justify-content: center;
-  align-items: center;
 `;
 
 export const Sentence = styled.h1`

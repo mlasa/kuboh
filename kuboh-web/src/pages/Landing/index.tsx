@@ -9,8 +9,7 @@ import { Background, Container, Content, Sentence } from './styles';
 const Landing: React.FC = () => (
   <>
     <Header>
-      <Link to="h">Sobre</Link>
-      <Link to="h">Contato</Link>
+      <Link to="about">Sobre</Link>
     </Header>
     <Content>
       <Container>
