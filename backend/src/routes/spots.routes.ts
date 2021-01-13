@@ -2,12 +2,12 @@ import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
 import Spot from '../models/Spot';
-
+import ensureAuthentication from '../middleware/ensureAuthentication';
 import CreateSpotService from '../services/CreateSpotService';
-import { PlainObjectToNewEntityTransformer } from 'typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer';
-
 
 const spotRouter = Router();
+
+spotRouter.use(ensureAuthentication);
 
 spotRouter.post('/', async (request, response) => {
   const {
