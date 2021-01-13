@@ -22,11 +22,13 @@ export const Container = styled.div`
     &:hover {
       background-color: ${shade(0.2, '#4ABDAC')};
     }
-    & + button {
+  }
+  a {
+    button {
       background: #dfdce3;
-    }
-    & + button:hover {
-      background: ${shade(0.2, '#dfdce3')};
+      &:hover {
+        background: ${shade(0.2, '#dfdce3')};
+      }
     }
   }
 `;

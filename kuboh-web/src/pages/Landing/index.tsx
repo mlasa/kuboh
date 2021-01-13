@@ -15,7 +15,9 @@ const Landing: React.FC = () => (
       <Container>
         <Sentence>Encontre ou compartilhe um lugar</Sentence>
         <Button>Cadastrar-se</Button>
-        <Button>Entrar</Button>
+        <Link to="signin">
+          <Button>Entrar</Button>
+        </Link>
       </Container>
       <Background>
         <img
