@@ -40,7 +40,6 @@ export default class CreateSpots1599444384250 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()',
           },
-
           {
             name: 'updated_at',
             type: 'timestamp',

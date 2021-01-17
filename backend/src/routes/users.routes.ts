@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
+import ensureAuthentication from '../middleware/ensureAuthentication';
+
 import User from '../models/User';
 import CreateUserService from '../services/CreateUserService';
 
@@ -19,6 +21,8 @@ usersRoutes.post('/', async (request, response) => {
 
   return response.status(200).json(createdUser);
 });
+
+usersRoutes.use(ensureAuthentication);
 
 usersRoutes.get('/', async (request, response) => {
   const userRepository = getRepository(User);

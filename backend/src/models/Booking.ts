@@ -18,25 +18,25 @@ class Booking {
   id: string;
 
   @Column()
-  customer_id: string;
+  guest_id: string;
   @ManyToOne(() => User, user => user, { eager: true })
-  @JoinColumn({ name: 'customer_id' })
-  customer: User;
+  @JoinColumn({ name: 'guest_id' })
+  guest: User;
 
   @Column()
   spot_id: string;
   @OneToOne(() => Spot, spot => spot, { eager: true })
-  @JoinColumn({ name: 'spot-id' })
+  @JoinColumn({ name: 'spot_id' })
   spot: Spot;
 
   @Column()
   status: string
 
   @Column()
-  checkin: Date;
+  check_in: Date;
 
   @Column()
-  checkout: Date;
+  check_out: Date;
 
   @CreateDateColumn()
   created_at: Date;
